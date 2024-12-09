@@ -5,17 +5,26 @@ import 'package:alaram_app/models/countdown_model.dart';
 class CountdownRepository {
   CountdownRepository._();
 
+  CountdownModel? currentCountDown;
+
+  bool get isActiveCountDown => currentCountDown != null;
+
   static const String _kCountDownBox = 'countdown-box';
 
   static CountdownRepository instance = CountdownRepository._();
 
+  static initRepo() async {
+    await GetStorage.init('countDown');
+    await instance.getCountDownIfActive();
+  }
+
   final GetStorage countDownBox = GetStorage('countDown');
 
   Future<void> startCountDown(CountdownModel countDown) async {
-    // final currentCountDown = countDownBox.read(_countDownBox);
-
     await Alarm.set(alarmSettings: countDown.settings!);
     await countDownBox.write(_kCountDownBox, countDown.toMap());
+
+    currentCountDown = countDown;
   }
 
   Future<CountdownModel?> getCountDownIfActive() async {
@@ -31,8 +40,9 @@ class CountdownRepository {
     }
 
     final settings = await Alarm.getAlarm(countToModel.id);
-
     countToModel.settings = settings;
+
+    currentCountDown = countToModel;
 
     return countToModel;
   }

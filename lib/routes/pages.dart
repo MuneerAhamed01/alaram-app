@@ -8,7 +8,7 @@ class Routes {
     return [
       GetPage(
         name: kMainRoute,
-        page: () => MainPage(),
+        page: () => const MainPage(),
         transition: Transition.fadeIn,
         binding: AlarmBindings(),
       ),

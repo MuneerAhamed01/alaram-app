@@ -20,10 +20,6 @@ class CountdownModel {
     };
   }
 
-  DateTime calculateEndTime(Duration duration) {
-    return startTime.add(duration);
-  }
-
   factory CountdownModel.fromMap(Map<String, dynamic> map) {
     return CountdownModel(
       id: map['id'] as int,

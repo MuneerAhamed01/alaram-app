@@ -66,21 +66,7 @@ class AlarmTile extends StatelessWidget {
             ],
           ),
         ),
-        const Spacer(),
-        Visibility(
-          visible: !isEditMode,
-          child: _buildSwitch(),
-        )
       ],
-    );
-  }
-
-  Switch _buildSwitch() {
-    return Switch(
-      value: false,
-      onChanged: (_) {},
-      activeColor: Colors.white,
-      activeTrackColor: Colors.green,
     );
   }
 }

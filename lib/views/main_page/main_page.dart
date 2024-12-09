@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:alaram_app/themes/colors.dart';
 import 'package:alaram_app/views/alarm/alarm_screen.dart';
@@ -11,9 +10,9 @@ import 'package:alaram_app/widgets/add_alarm_sheet/add_alarm_widget.dart';
 const String kMainRoute = '/main';
 
 class MainPage extends GetView<MainController> {
-  MainPage({super.key});
+  const MainPage({super.key});
 
-  final List<Widget> screens = [
+  final List<Widget> screens = const [
     AlarmScreen(),
     CountdownScreen(),
   ];
