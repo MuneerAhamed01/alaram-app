@@ -1,16 +1,49 @@
-# alaram_app
+Alarm Application
+A simple and intuitive alarm app inspired by the iOS alarm UI. It allows users to set alarms for specific times and create countdown timers effortlessly.
 
-A new Flutter project.
+Features
+Set Alarms: Schedule alarms for specific times.
+Set Countdown Timers: Easily configure countdown timers for specific durations.
+Technologies Used
+Framework: Flutter
+State Management: GetX
+Local Storage: GetStorage
+Architecture: MVC (Model-View-Controller)
+Alarm Package: alarm
+Installation and Setup
+Prerequisites
+Flutter Version: 3.24.3 (Ensure Flutter is installed and configured properly)
+Install Flutter: Flutter installation guide
+Steps
+Clone the repository:
 
-## Getting Started
+bash
+Copy code
+git clone <repository_url>  
+cd alarm_application  
+Install dependencies:
 
-This project is a starting point for a Flutter application.
+bash
+Copy code
+flutter pub get  
+Run the app on an emulator or device:
 
-A few resources to get you started if this is your first Flutter project:
+bash
+Copy code
+flutter run  
+Dependencies
+The following dependencies are used in this application:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+alarm
+getx
+getstorage
+To install these dependencies, they are already listed in pubspec.yaml. Use:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+bash
+Copy code
+flutter pub get  
+Platform Support
+The application currently supports:
+
+Android
+iOS (some setup pending)
