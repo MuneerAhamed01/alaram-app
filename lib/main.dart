@@ -1,10 +1,14 @@
 import 'package:get/get.dart';
+import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:alaram_app/routes/pages.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:alaram_app/views/alarm/alarm_screen.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
+  await Alarm.init();
   runApp(const MyApp());
 }
 
@@ -17,6 +21,8 @@ class MyApp extends StatelessWidget {
       title: 'Alarm Application',
       getPages: Routes().getGetXPages(),
       initialRoute: kAlarmRoute,
+      theme: ThemeData.dark(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
