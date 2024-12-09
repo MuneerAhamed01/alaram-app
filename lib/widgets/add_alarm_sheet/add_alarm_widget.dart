@@ -61,25 +61,6 @@ class AddAlarmWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // _buildSettingItem(
-          //   'Repeat',
-          //   trailing: Row(
-          //     children: [
-          //       const Text(
-          //         'Never',
-          //         style: TextStyle(
-          //           color: Colors.grey,
-          //         ),
-          //       ),
-          //       const SizedBox(width: 8),
-          //       Icon(
-          //         CupertinoIcons.right_chevron,
-          //         size: 16,
-          //         color: Colors.grey.shade600,
-          //       ),
-          //     ],
-          //   ),
-          // ),
           _buildDivider(),
           _buildSettingItem(
             'Label',
@@ -97,18 +78,6 @@ class AddAlarmWidget extends StatelessWidget {
             ),
           ),
           _buildDivider(),
-          // _buildSettingItem(
-          //   'Snooze',
-          //   trailing: CupertinoSwitch(
-          //     value: true,
-          //     activeColor: Colors.green,
-          //     onChanged: (value) {
-          //       // setState(() {
-          //       //   snoozeEnabled = value;
-          //       // });
-          //     },
-          //   ),
-          // ),
         ],
       ),
     );
@@ -136,11 +105,7 @@ class AddAlarmWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              onSelectedItemChanged: (value) {
-                // setState(() {
-                //   selectedHour = value + 1;
-                // });
-              },
+              onSelectedItemChanged: (value) {},
             ),
           ),
           // Minutes
@@ -158,11 +123,7 @@ class AddAlarmWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              onSelectedItemChanged: (value) {
-                // setState(() {
-                //   selectedMinute = value;
-                // });
-              },
+              onSelectedItemChanged: (value) {},
             ),
           ),
           // AM/PM
@@ -185,11 +146,7 @@ class AddAlarmWidget extends StatelessWidget {
                   ),
                 ),
               ],
-              onSelectedItemChanged: (value) {
-                // setState(() {
-                //   isAM = value == 0;
-                // });
-              },
+              onSelectedItemChanged: (value) {},
             ),
           ),
         ],

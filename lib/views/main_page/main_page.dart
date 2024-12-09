@@ -25,7 +25,7 @@ class MainPage extends GetView<MainController> {
             ? AppBar(
                 leadingWidth: 70,
                 leading: _buildAppBarLeading(),
-                actions: [_buildAppBarAction()],
+                actions: [_buildAppBarAction(), const SizedBox(width: 10)],
               )
             : null,
         body: screens[controller.selectedIndex.value],

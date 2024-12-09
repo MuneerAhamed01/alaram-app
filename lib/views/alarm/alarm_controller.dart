@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:alarm/alarm.dart';
 import 'package:alaram_app/utils/permissions.dart';
 import 'package:alaram_app/models/alarm_model.dart';
-import 'package:alaram_app/repostiory/alarm_repository.dart';
+import 'package:alaram_app/repository/alarm_repository.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class AlarmController extends GetxController {
@@ -41,10 +41,6 @@ class AlarmController extends GetxController {
     update();
   }
 
-  void listenToAlarm(AlarmSettings alarm) {
-    // Navigate
-  }
-
   void updateEdit() {
     isEditMode = !isEditMode;
     update();
@@ -58,8 +54,4 @@ class AlarmController extends GetxController {
     }
     update();
   }
-
-  // Future<void> _storeNewAlarmWhileAdding() async {
-  //   AlarmRepository.instance.addAllAlarm(alarms);
-  // }
 }

@@ -27,30 +27,10 @@ class AlarmScreen extends GetWidget<AlarmController> {
             const SizedBox(height: 20),
             GetBuilder<AlarmController>(
               builder: (_) {
-                if (controller.isLoadingAlarms) {
-                  return const CircularProgressIndicator();
-                }
-                if (controller.alarms.isEmpty) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 30),
-                    child: Center(
-                      child: Column(
-                        children: [
-                          const Icon(
-                            Icons.alarm_off,
-                            size: 100,
-                            color: Colors.grey,
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            'No alarms set',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }
+                if (controller.isLoadingAlarms) return _buildLoadingIndicator();
+
+                if (controller.alarms.isEmpty) return _buildEmptyState(context);
+
                 return ListView.separated(
                   shrinkWrap: true,
                   itemCount: controller.alarms.length,
@@ -81,4 +61,29 @@ class AlarmScreen extends GetWidget<AlarmController> {
       ),
     );
   }
+
+  Padding _buildEmptyState(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 30),
+      child: Center(
+        child: Column(
+          children: [
+            const Icon(
+              Icons.alarm_off,
+              size: 100,
+              color: Colors.grey,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              'No alarms set',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Center _buildLoadingIndicator() =>
+      const Center(child: CircularProgressIndicator());
 }

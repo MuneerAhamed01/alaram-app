@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:alarm/model/alarm_settings.dart';
 import 'package:alaram_app/models/alarm_model.dart';
 import 'package:alarm/model/notification_settings.dart';
-import 'package:alaram_app/repostiory/alarm_repository.dart';
+import 'package:alaram_app/repository/alarm_repository.dart';
 
 class AddAlarmController extends GetxController {
   RxBool isLoading = false.obs;

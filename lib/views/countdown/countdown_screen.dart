@@ -18,7 +18,7 @@ class CountdownScreen extends GetView<CountdownController> {
               children: <Widget>[
                 const SizedBox(height: 20),
                 const Text(
-                  'CountDown',
+                  'Countdown',
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 30,
@@ -62,8 +62,6 @@ class CountdownScreen extends GetView<CountdownController> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  // _buildResetTimer(),
-                  // const SizedBox(height: 20),
                   _buildDeleteTimer()
                 ],
               ],

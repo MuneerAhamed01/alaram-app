@@ -53,13 +53,13 @@ class CountdownController extends GetxController {
     }
   }
 
-  onStartTimer() {
+  void onStartTimer() {
     totalSeconds = hours * 3600 + minutes * 60 + seconds;
     startTimer();
     _enableNotificationForTheCountdown();
   }
 
-  onDeleteTimer() {
+  void onDeleteTimer() {
     timer?.cancel();
     isRunning = false;
     hours = 0;
