@@ -3,7 +3,7 @@ import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:alaram_app/routes/pages.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:alaram_app/views/alarm/alarm_screen.dart';
+import 'package:alaram_app/views/main_page/main_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Alarm Application',
       getPages: Routes().getGetXPages(),
-      initialRoute: kAlarmRoute,
+      initialRoute: kMainRoute,
       theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
     );
