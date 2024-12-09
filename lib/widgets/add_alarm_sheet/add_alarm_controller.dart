@@ -108,7 +108,10 @@ class AddAlarmController extends GetxController {
     final alarmSettings = AlarmSettings(
       id: id,
       dateTime: DateTime.now().copyWith(
-        hour: hourExtend.selectedItem + 1,
+        hour: _convertTo24Hour(
+          hourExtend.selectedItem + 1,
+          amOrPmExtend.selectedItem == 0,
+        ),
         minute: minuteExtend.selectedItem,
         second: 0,
       ),
@@ -125,5 +128,15 @@ class AddAlarmController extends GetxController {
       ),
     );
     return alarmSettings;
+  }
+
+  int _convertTo24Hour(int hour, bool isAm) {
+    if (isAm) {
+      // For AM, hour 12 should be 0 (midnight)
+      return hour == 12 ? 0 : hour;
+    } else {
+      // For PM, hour should be 12 if it's 12 PM, otherwise add 12
+      return hour == 12 ? 12 : hour + 12;
+    }
   }
 }
