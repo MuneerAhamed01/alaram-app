@@ -7,6 +7,8 @@ class AlarmModel {
   final bool isEnabled;
   final bool isDeleted;
 
+  bool get deleted => alarmSettings == null;
+
   AlarmModel({
     required this.id,
     required this.label,

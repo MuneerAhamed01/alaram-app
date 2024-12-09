@@ -7,14 +7,15 @@ import 'package:alaram_app/repostiory/alarm_repository.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class AlarmController extends GetxController {
-  RxBool isLoadingAlarms = false.obs;
+  bool isLoadingAlarms = false;
+
+  bool isEditMode = false;
+
+  static const String editUpdate = 'UPDATE_EDIT';
 
   List<AlarmModel> alarms = [];
 
   bool hasError = false;
-
-  StreamSubscription<AlarmSettings>? ringSubscription;
-  StreamSubscription<int>? updateSubscription;
 
   @override
   void onInit() {
@@ -23,9 +24,6 @@ class AlarmController extends GetxController {
     if (Alarm.android) {
       AlarmPermissions.checkAndroidScheduleExactAlarmPermission();
     }
-    ringSubscription = Alarm.ringStream.stream.listen(listenToAlarm);
-
-    updateSubscription ??= Alarm.updateStream.stream.listen(listenToUpdate);
 
     getAllAlarms();
   }
@@ -33,32 +31,37 @@ class AlarmController extends GetxController {
   Future<void> getAllAlarms([
     bool silentUpdate = false,
   ]) async {
-    isLoadingAlarms.value = true;
+    isLoadingAlarms = true;
+    update();
     alarms = await AlarmRepository.instance.getAllAlarms();
     alarms.sort((a, b) =>
         a.alarmSettings!.dateTime.isBefore(b.alarmSettings!.dateTime) ? 0 : 1);
 
-    isLoadingAlarms.value = false;
+    alarms = alarms.where((e) => !e.deleted).toList();
+
+    isLoadingAlarms = false;
+    update();
   }
 
   void listenToAlarm(AlarmSettings alarm) {
     // Navigate
   }
 
-  void listenToUpdate(int alarm) async {
-    await getAllAlarms(true);
+  void updateEdit() {
+    isEditMode = !isEditMode;
+    update();
+  }
 
-    // _storeNewAlarmWhileAdding();
+  Future<void> deleteAlarm(int id) async {
+    await AlarmRepository.instance.deleteAlarm(id);
+    alarms.removeWhere((e) => e.id == id);
+    if (alarms.isEmpty) {
+      isEditMode = false;
+    }
+    update();
   }
 
   // Future<void> _storeNewAlarmWhileAdding() async {
   //   AlarmRepository.instance.addAllAlarm(alarms);
   // }
-
-  @override
-  void onClose() {
-    ringSubscription?.cancel();
-    updateSubscription?.cancel();
-    super.onClose();
-  }
 }

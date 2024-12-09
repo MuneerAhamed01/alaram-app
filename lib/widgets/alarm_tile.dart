@@ -9,11 +9,13 @@ class AlarmTile extends StatelessWidget {
     this.onDismissed,
     this.isEditMode = false,
     required this.alarm,
+    this.onTapDelete,
   });
 
   final AlarmModel alarm;
   final void Function() onPressed;
   final void Function()? onDismissed;
+  final void Function()? onTapDelete;
   final bool isEditMode;
 
   String get title {
@@ -30,19 +32,22 @@ class AlarmTile extends StatelessWidget {
       children: [
         Visibility(
           visible: isEditMode,
-          child: const CircleAvatar(
-            radius: 12,
-            backgroundColor: Colors.red,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 7),
-              child: Divider(
-                thickness: 1.5,
-                color: Colors.white,
+          child: GestureDetector(
+            onTap: onTapDelete,
+            child: const CircleAvatar(
+              radius: 12,
+              backgroundColor: Colors.red,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 7),
+                child: Divider(
+                  thickness: 1.5,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
         ),
-        const SizedBox(width: 10),
+        if (isEditMode) const SizedBox(width: 10),
         Expanded(
           flex: 3,
           child: Column(
@@ -53,14 +58,15 @@ class AlarmTile extends StatelessWidget {
                 style: const TextStyle(fontSize: 36),
               ),
               const SizedBox(height: 4),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Text(
-                  alarm.label,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+              if (alarm.label.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text(
+                    alarm.label,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
             ],
           ),
         ),

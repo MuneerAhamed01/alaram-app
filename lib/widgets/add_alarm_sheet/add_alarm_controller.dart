@@ -74,7 +74,7 @@ class AddAlarmController extends GetxController {
     final alarmSettings = _buildAlarmSettings();
     final AlarmModel model = AlarmModel(
       id: alarmSettings.id,
-      label: labelController.text.isEmpty ? labelController.text : "Alarm",
+      label: labelController.text.isNotEmpty ? labelController.text : "Alarm",
       isEnabled: true,
       isDeleted: false,
       alarmSettings: alarmSettings,
@@ -93,7 +93,7 @@ class AddAlarmController extends GetxController {
     final alarmSettings = AlarmSettings(
       id: id,
       dateTime: DateTime.now().copyWith(
-        hour: hourExtend.selectedItem + 9,
+        hour: hourExtend.selectedItem + 1,
         minute: minuteExtend.selectedItem,
       ),
       vibrate: false,
@@ -101,7 +101,7 @@ class AddAlarmController extends GetxController {
       warningNotificationOnKill: Platform.isIOS,
       notificationSettings: NotificationSettings(
         title: "It's Time",
-        body: labelController.text.isEmpty
+        body: labelController.text.isNotEmpty
             ? labelController.text
             : "Alarm is ringing",
         stopButton: 'Stop',

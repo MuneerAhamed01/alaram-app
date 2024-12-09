@@ -7,8 +7,8 @@ import 'package:alaram_app/widgets/add_alarm_sheet/add_alarm_controller.dart';
 class AddAlarmWidget extends StatelessWidget {
   const AddAlarmWidget({super.key});
 
-  static showBottomSheet() {
-    return Get.bottomSheet(
+  static Future<void> showBottomSheet() async {
+    return await Get.bottomSheet(
       const AddAlarmWidget(),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
@@ -219,8 +219,8 @@ class AddAlarmWidget extends StatelessWidget {
             ),
           ),
           TextButton(
-            onPressed: () {
-              Get.find<AddAlarmController>().saveAlarm();
+            onPressed: () async {
+              await Get.find<AddAlarmController>().saveAlarm();
               Get.back();
             },
             child: Text(

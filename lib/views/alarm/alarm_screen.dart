@@ -34,9 +34,9 @@ class AlarmScreen extends GetWidget<AlarmController> {
                   fontSize: 30,
                 ),
               ),
-              Obx(
-                () {
-                  if (controller.isLoadingAlarms.value) {
+              GetBuilder<AlarmController>(
+                builder: (_) {
+                  if (controller.isLoadingAlarms) {
                     return const CircularProgressIndicator();
                   }
                   if (controller.alarms.isEmpty) {
@@ -59,6 +59,10 @@ class AlarmScreen extends GetWidget<AlarmController> {
                           // _buildAddAlarm(controller.alarms[index]);
                         },
                         onDismissed: () {},
+                        isEditMode: controller.isEditMode,
+                        onTapDelete: () {
+                          controller.deleteAlarm(controller.alarms[index].id);
+                        },
                       );
                     },
                   );
@@ -90,8 +94,9 @@ class AlarmScreen extends GetWidget<AlarmController> {
 
   IconButton _buildAppBarAction() {
     return IconButton(
-      onPressed: () {
-        AddAlarmWidget.showBottomSheet();
+      onPressed: () async {
+        await AddAlarmWidget.showBottomSheet();
+        controller.getAllAlarms(true);
       },
       icon: Icon(
         Icons.add,
@@ -101,17 +106,26 @@ class AlarmScreen extends GetWidget<AlarmController> {
     );
   }
 
-  TextButton _buildAppBarLeading() {
-    return TextButton(
-      onPressed: () {},
-      child: Text(
-        'Edit',
-        style: TextStyle(
-          fontSize: 18,
-          color: MyColors.textButtonColor,
-          fontWeight: FontWeight.normal,
-        ),
-      ),
+  Widget _buildAppBarLeading() {
+    return GetBuilder<AlarmController>(
+      builder: (_) {
+        return Visibility(
+          visible: controller.alarms.isNotEmpty,
+          child: TextButton(
+            onPressed: () {
+              controller.updateEdit();
+            },
+            child: Text(
+              'Edit',
+              style: TextStyle(
+                fontSize: 18,
+                color: MyColors.textButtonColor,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
