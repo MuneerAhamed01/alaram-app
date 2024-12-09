@@ -31,15 +31,13 @@ class AlarmController extends GetxController {
   Future<void> getAllAlarms([
     bool silentUpdate = false,
   ]) async {
-    isLoadingAlarms = true;
+    if (!silentUpdate) isLoadingAlarms = true;
     update();
     alarms = await AlarmRepository.instance.getAllAlarms();
     alarms.sort((a, b) =>
         a.alarmSettings!.dateTime.isBefore(b.alarmSettings!.dateTime) ? 0 : 1);
 
-    alarms = alarms.where((e) => !e.deleted).toList();
-
-    isLoadingAlarms = false;
+    if (!silentUpdate) isLoadingAlarms = false;
     update();
   }
 

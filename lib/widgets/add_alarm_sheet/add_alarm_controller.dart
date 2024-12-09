@@ -10,6 +10,8 @@ import 'package:alaram_app/repostiory/alarm_repository.dart';
 class AddAlarmController extends GetxController {
   RxBool isLoading = false.obs;
 
+  AddAlarmController({this.alarm});
+
   AlarmModel? alarm;
 
   bool get isEditing => alarm != null;
@@ -52,7 +54,7 @@ class AddAlarmController extends GetxController {
           ? 12
           : alarm!.alarmSettings!.dateTime.hour % 12;
       hourExtend = FixedExtentScrollController(
-        initialItem: hourIn12,
+        initialItem: hourIn12 - 1,
       );
       minuteExtend = FixedExtentScrollController(
         initialItem: alarm?.alarmSettings!.dateTime.minute ?? 0,
@@ -61,6 +63,8 @@ class AddAlarmController extends GetxController {
       amOrPmExtend = FixedExtentScrollController(
         initialItem: alarm!.alarmSettings!.dateTime.hour < 12 ? 0 : 1,
       );
+
+      labelController.text = alarm?.label ?? '';
     }
   }
 
@@ -68,7 +72,6 @@ class AddAlarmController extends GetxController {
     selectedTime.value = newTime;
   }
 
-  // final AlarmService
   Future<void> saveAlarm() async {
     isLoading.value = true;
     final alarmSettings = _buildAlarmSettings();
@@ -85,6 +88,18 @@ class AddAlarmController extends GetxController {
     isLoading.value = false;
   }
 
+  Future<void> updateAlarm() async {
+    final alarmSettings = _buildAlarmSettings();
+    final alarmUpdate = AlarmModel(
+      id: alarm!.id,
+      alarmSettings: alarmSettings,
+      label: labelController.text,
+      isEnabled: alarm!.isEnabled,
+      isDeleted: alarm!.isDeleted,
+    );
+    await AlarmRepository.instance.updateAlarm(alarmUpdate);
+  }
+
   AlarmSettings _buildAlarmSettings() {
     final id = !isEditing
         ? DateTime.now().millisecondsSinceEpoch % 10000 + 1
@@ -95,6 +110,7 @@ class AddAlarmController extends GetxController {
       dateTime: DateTime.now().copyWith(
         hour: hourExtend.selectedItem + 1,
         minute: minuteExtend.selectedItem,
+        second: 0,
       ),
       vibrate: false,
       assetAudioPath: 'assets/ringtone/marimba.mp3',

@@ -34,7 +34,7 @@ class AlarmRepository {
       }
     }
 
-    return alarmModels;
+    return alarmModels.where((e) => !e.deleted).toList();
   }
 
   Future<void> updateAlarm(AlarmModel alarm) async {
@@ -45,7 +45,10 @@ class AlarmRepository {
     await Alarm.stop(alarm.id);
     await Alarm.set(alarmSettings: alarm.alarmSettings!);
     localAlarmList[indexOfAlarmEditing] = alarm;
-    await alarmBox.write(_kAlarmBox, localAlarmList);
+    await alarmBox.write(
+      _kAlarmBox,
+      localAlarmList.map((e) => e.toMap()).toList(),
+    );
   }
 
   Future<void> deleteAlarm(int id) async {
@@ -53,6 +56,9 @@ class AlarmRepository {
     final alarmList = alarmBox.read<List>(_kAlarmBox) ?? [];
     final localAlarmList = alarmList.map((e) => AlarmModel.fromMap(e)).toList();
     localAlarmList.removeWhere((e) => e.id == id);
-    await alarmBox.write(_kAlarmBox, localAlarmList);
+    await alarmBox.write(
+      _kAlarmBox,
+      localAlarmList.map((e) => e.toMap()).toList(),
+    );
   }
 }

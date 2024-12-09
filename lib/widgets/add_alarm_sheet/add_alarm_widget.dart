@@ -2,14 +2,18 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:alaram_app/themes/colors.dart';
+import 'package:alaram_app/models/alarm_model.dart';
 import 'package:alaram_app/widgets/add_alarm_sheet/add_alarm_controller.dart';
 
 class AddAlarmWidget extends StatelessWidget {
-  const AddAlarmWidget({super.key});
+  const AddAlarmWidget({super.key, this.alarm});
+  final AlarmModel? alarm;
 
-  static Future<void> showBottomSheet() async {
+  static Future<void> showBottomSheet({
+    AlarmModel? alarm,
+  }) async {
     return await Get.bottomSheet(
-      const AddAlarmWidget(),
+      AddAlarmWidget(alarm: alarm),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(16),
@@ -22,7 +26,7 @@ class AddAlarmWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AddAlarmController>(
-      init: AddAlarmController(),
+      init: AddAlarmController(alarm: alarm),
       builder: (controller) {
         return Container(
           height: Get.height * 0.8,
@@ -220,7 +224,11 @@ class AddAlarmWidget extends StatelessWidget {
           ),
           TextButton(
             onPressed: () async {
-              await Get.find<AddAlarmController>().saveAlarm();
+              if (Get.find<AddAlarmController>().isEditing) {
+                await Get.find<AddAlarmController>().updateAlarm();
+              } else {
+                await Get.find<AddAlarmController>().saveAlarm();
+              }
               Get.back();
             },
             child: Text(

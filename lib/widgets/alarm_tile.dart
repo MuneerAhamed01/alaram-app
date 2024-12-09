@@ -4,17 +4,13 @@ import 'package:alaram_app/models/alarm_model.dart';
 
 class AlarmTile extends StatelessWidget {
   const AlarmTile({
-    required this.onPressed,
     super.key,
-    this.onDismissed,
     this.isEditMode = false,
     required this.alarm,
     this.onTapDelete,
   });
 
   final AlarmModel alarm;
-  final void Function() onPressed;
-  final void Function()? onDismissed;
   final void Function()? onTapDelete;
   final bool isEditMode;
 
